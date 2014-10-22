@@ -11,16 +11,16 @@ class Candidate:
 	def getcount (self):
 		return self.count
 
-	def increment (self, ballot):
+	def increment (self, bal):
 		self.count += 1
-		self.ballots.append (ballot)
+		self.ballots.append (bal.choices)
 
 class Ballot:
 	def __init__ (self, choices):
 		self.choices = choices
 
 	def getchoice (self, run = 0):
-		x = self.choices[run]
+		x = int(self.choices[run])
 		run += 1
 		return x
 
@@ -38,13 +38,16 @@ def voting_read():
 	clist = []
 	for i in range (totcandidates): 
 		clist.append(Candidate(r.readline(), i + 1))
-	# for c in clist:
-	# 	print (c.name, c.num)
 	while (True):
 		line = r.readline()
 		if (line == ''):
 			break
 		ballot = Ballot(line.split())
-		
+		choice1 = ballot.getchoice()
+		for c in clist:
+			if (choice1 == c.num):
+				c.increment(ballot)
+	for c in clist:
+		print (c.name, c.num, c.count, c.ballots)
 
 voting_read()
