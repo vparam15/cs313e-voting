@@ -1,7 +1,7 @@
 from io import StringIO
 from unittest import main, TestCase
 
-from Voting import voting_read, #function to read text???
+from Voting import voting_read, find_winner, find_tie
 
 class TestVoting (TestCase): 
 
@@ -12,7 +12,7 @@ class TestVoting (TestCase):
 		self.assertEqual (w.getvalue(), "Red")
 
 	def test_solve_2 (self): 
-		r = StringIO ("1\n""\n3\nRed\nGreen\nBlue\n1 2 3 \n2 1\n1 2\n1 2 ")
+		r = StringIO ("1\n""\n3\nRed\nGreen\nBlue\n1 2 3 \n2 1 3 \n1 2 3 \n1 2 3")
 		w = StringIO()
 		voting_read(r,w)
 		self.assertEqual (w.getvalue(), "")
