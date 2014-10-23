@@ -1,4 +1,5 @@
 import math
+
 class Candidate:
 	def __init__ (self, name, num):
 		self.name = name
@@ -12,9 +13,9 @@ class Candidate:
 	def getcount (self):
 		return self.count
 
-	def increment (self, bal):
+	def increment (self, b): 
 		self.count += 1
-		self.ballots.append (bal.choices)
+		self.ballots.append (b.choices)
 
 class Ballot:
 	def __init__ (self, choices):
@@ -24,6 +25,7 @@ class Ballot:
 		x = int(self.choices[run])
 		run += 1
 		return x
+
 
 def find_winner (clist, majority):
 	for c in clist:
@@ -40,7 +42,8 @@ def find_tie (clist, tie_num):
 		print ("No winner")
 
 def voting_read():
-	r = open('/v/filer4b/v35q001/vparam/cs313e/projects/cs313e-voting/RunVoting.in', 'r')
+	r = open('/v/filer4b/v35q001/hog74/cs313e-voting/RunVoting.in', 'r')
+
 	while (True):
 		line = r.readline()
 		if not line:
