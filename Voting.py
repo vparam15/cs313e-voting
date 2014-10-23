@@ -20,29 +20,37 @@ class Candidate:
 class Ballot:
 	def __init__ (self, choices):
 		self.choices = choices
+		self.marker = 0
 
-	def getchoice (self, run = 0):
-		x = int(self.choices[run])
-		run += 1
+	def getchoice (self):
+		x = int(self.choices[self.marker])
+		self.marker += 1
 		return x
 
 
 def find_winner (clist, majority):
 	for c in clist:
-		if c.count >= majority:
+		if c.count > majority:
 			print(c.name)
-			break
+			return True
 
 def find_tie (clist, tie_num):
 	all_tied = True
 	for c in clist:
-		if c.count != tie_num:
-			all_tied == False
+		if c.count == tie_num:
+			pass
+		else:
+			all_tied = False
 	if all_tied == True:
-		print ("No winner")
+		for c in clist:
+			print (c.name)
+		return True
 
-def voting_read():
-	r = open('/v/filer4b/v35q001/hog74/cs313e-voting/RunVoting.in', 'r')
+def voting_solve (clist, ):
+	pass
+
+def voting_read ():
+	r = open('/v/filer4b/v35q001/vparam/cs313e/projects/cs313e-voting/cs313e-voting/RunVoting.in', 'r')
 
 	while (True):
 		line = r.readline()
@@ -68,7 +76,9 @@ def voting_read():
 						c.increment(ballot)
 			majority = math.ceil(numBallots / 2)
 			tie_num = numBallots/totcandidates
-			find_winner (clist, majority)
-			find_tie (clist, tie_num)
+			if find_winner (clist, majority) == True:
+				break
+			elif find_tie (clist, tie_num) == True:
+				break
 
 voting_read()
