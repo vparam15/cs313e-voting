@@ -67,7 +67,7 @@ def voting_solve (clist):
 								c.increment(b)
 								transferred = True
 
-def voting_read ():
+def voting_read (r, w):
 	r = open('/v/filer4b/v35q001/vparam/cs313e/projects/cs313e-voting/cs313e-voting/RunVoting.in', 'r')
 
 	while (True):
