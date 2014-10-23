@@ -36,3 +36,34 @@ class TestVoting (TestCase):
 		voting_read(r,w)
 		self.assertEqual (w.getvalue(), "Red\nGreen")
 
+	def test_solve_6 (self): 
+		r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n2 1\n1 2\n1 2")
+		w = StringIO()
+		voting_read(r,w)
+		self.assertEqual (w.getvalue(), "Red")
+
+	def test_solve_7 (self): 
+		r = StringIO ("1\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n")
+		w = StringIO()
+		voting_read(r,w)
+		self.assertEqual (w.getvalue(), "Green")
+
+	def test_solve_8 (self): 
+		r = StringIO ("1\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n1 3 2")
+		w = StringIO()
+		voting_read(r,w)
+		self.assertEqual (w.getvalue(), "Red")
+
+	def test_solve_9 (self): 
+		r = StringIO ("2\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n1 3 2\n\
+			 \n2\nJohn\nJake\n1 2\n2 1\n1 2")
+		w = StringIO()
+		voting_read(r,w)
+		self.assertEqual (w.getvalue(), "Red\n \nJohn")
+
+	def test_solve_10 (self): 
+		r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n2 1\n1 2\n2 1")
+		w = StringIO()
+		voting_read(r,w)
+		self.assertEqual (w.getvalue(), "Red\nGreen")
+
