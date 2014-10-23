@@ -6,6 +6,7 @@ class Candidate:
 		self.num = num
 		self.count = 0
 		self.ballots = []
+		self.running = True
 
 	def getname (self):
 		return self.name
@@ -15,7 +16,7 @@ class Candidate:
 
 	def increment (self, b): 
 		self.count += 1
-		self.ballots.append (b.choices)
+		self.ballots.append (b)
 
 class Ballot:
 	def __init__ (self, choices):
@@ -46,8 +47,24 @@ def find_tie (clist, tie_num):
 			print (c.name)
 		return True
 
-def voting_solve (clist, ):
-	pass
+def voting_solve (clist):
+	max_count = 0
+	for c in clist:
+		if c.count >= max_count:
+			max_count = c.count
+		else:
+			c.running = False
+	for c in clist:
+		if c.running is False:
+			for b in c.ballots:
+				transferred = False
+				while not transferred:
+					next_choice = b.getchoice()
+					for c in clist:
+						if c.running is True:
+							if next_choice == c.num:
+								c.increment(b)
+								transferred = True
 
 def voting_read ():
 	r = open('/v/filer4b/v35q001/vparam/cs313e/projects/cs313e-voting/cs313e-voting/RunVoting.in', 'r')
@@ -80,5 +97,6 @@ def voting_read ():
 				break
 			elif find_tie (clist, tie_num) == True:
 				break
+			voting_solve (clist)
 
 voting_read()
