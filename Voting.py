@@ -28,12 +28,12 @@ class Ballot:
 		self.marker += 1
 		return x
 
-
 def find_winner (clist, majority):
 	for c in clist:
 		if c.count > majority:
 			print(c.name)
-			return True
+	global done
+	done = True
 
 def find_tie (clist, tie_num):
 	all_tied = True
@@ -45,7 +45,8 @@ def find_tie (clist, tie_num):
 	if all_tied == True:
 		for c in clist:
 			print (c.name)
-		return True
+	global done
+	done = True
 
 def voting_solve (clist):
 	max_count = 0
@@ -93,10 +94,14 @@ def voting_read ():
 						c.increment(ballot)
 			majority = math.ceil(numBallots / 2)
 			tie_num = numBallots/totcandidates
-			if find_winner (clist, majority) == True:
-				break
-			elif find_tie (clist, tie_num) == True:
-				break
-			voting_solve (clist)
+			done = False
+			while not done:
+				find_winner (clist, majority)
+				if done == True:
+					break
+				find_tie (clist, tie_num)
+				if done == True:
+					break
+				voting_solve (clist)
 
 voting_read()
