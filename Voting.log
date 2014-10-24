@@ -1,0 +1,137 @@
+commit 63392f7afc0330be346bf8d5d352618a56f8191c
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Fri Oct 24 18:22:45 2014 -0500
+
+    Created Voting.html and pushed all files to public repo
+
+commit b2ea6b921ba9a605ecfe071b8fc839b50ad8f167
+Author: Herbert Gutierrez Rivas <hog74@cs.utexas.edu>
+Date:   Fri Oct 24 17:43:31 2014 -0500
+
+    Got coverage to 99%
+
+commit 4f3f33d2a85c61ecc963de16f47cb5b85e7cf8a9
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Fri Oct 24 13:23:43 2014 -0500
+
+    Fixed our unit tests; however, coverage keeps dropping for some godforsaken reason
+
+commit eaf0cc00bac87f990e5d54729c0488fbba0fe9ee
+Author: Herbert Gutierrez Rivas <hog74@cs.utexas.edu>
+Date:   Fri Oct 24 12:32:35 2014 -0500
+
+    Able to read standard in and standard out
+
+commit bd343e42b08a6becc7f605dcaa103f7127cd9ff5
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Fri Oct 24 11:57:41 2014 -0500
+
+    Slight adjustments to Voting.py, beginning to write test cases
+
+commit 4dd5162893c2e30a2bb6c77a062fdd27a6ed1b35
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Fri Oct 24 01:49:57 2014 -0500
+
+    Last thing remaining - fix TestVoting.py
+
+commit 51df32302962be5327211aaba00e6bd4d25a133d
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Fri Oct 24 00:42:59 2014 -0500
+
+    Created 1000 lines of acceptance tests; still need to write them to an output file
+
+commit f4ee9f2a7e1dc1de6c5ae00079a519bfca83a39b
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Thu Oct 23 23:43:55 2014 -0500
+
+    Broke voting solve up into smaller functions and debugged
+
+commit 1dbec4bde0ffefc7179d0d644693a8c1479b02d4
+Author: Herbert Gutierrez Rivas <hog74@cs.utexas.edu>
+Date:   Thu Oct 23 17:56:19 2014 -0500
+
+    small changes to test cases
+
+commit ed5a0e982f2b788c54fc1eeff21c816d0e975760
+Author: Herbert Gutierrez Rivas <hog74@cs.utexas.edu>
+Date:   Thu Oct 23 17:53:28 2014 -0500
+
+    startingwith test cases
+
+commit 5395d854ef1f736f1a5038f8f72b7f42aed94fba
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Thu Oct 23 01:41:51 2014 -0500
+
+    Dead end - list indexing error when running repeated tests for win and tie
+
+commit dad7020212d66bdbb1917e85324016e9b622f476
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Thu Oct 23 00:48:34 2014 -0500
+
+    First draft of final solve function
+
+commit c0031f8d982c0c89ae6d1e7e7725a12d4b3861ad
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Wed Oct 22 23:22:09 2014 -0500
+
+    Wrote code to test for majority winner or all tied
+
+commit c01324a15b33c8687bc3297de8d85a06177113e5
+Author: Herbert Gutierrez Rivas <hog74@cs.utexas.edu>
+Date:   Wed Oct 22 22:56:12 2014 -0500
+
+    started our Tests
+
+commit 1003a862d3ca1ed126d03c5e64f6052d1b04a01b
+Author: Herbert Gutierrez Rivas <hog74@cs.utexas.edu>
+Date:   Wed Oct 22 22:55:14 2014 -0500
+
+    Small changes to the functions
+
+commit 1055a6da28aa51a00a6c8b13f2bde57e6e9aea6f
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Wed Oct 22 18:56:04 2014 -0500
+
+    Read function now covers all elections; in the process of writing tests to find a winner or a tie in the first run
+
+commit 40893edbb77750f8a69c3e232230e2e6582a8fa5
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Wed Oct 22 13:57:19 2014 -0500
+
+    Read function can now read the first preferences of all ballots
+
+commit 49cf5c819be81b232b5de865a2c7513fa545acf3
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Wed Oct 22 13:40:17 2014 -0500
+
+    Added classes; still need to put ballots into candidates' buckets
+
+commit 67b8be1991ea68f1f03737a0b25ae69489982635
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Wed Oct 22 12:19:38 2014 -0500
+
+    Read function without classes
+
+commit 6f00b85c9714290fb8b3c8d9fb82d599cf6cd8a1
+Author: Herbert Gutierrez Rivas <hog74@cs.utexas.edu>
+Date:   Thu Oct 16 22:05:16 2014 -0500
+
+    starting code
+
+commit 3d7379e212bc99eb200deadc7fc1a17457c386ea
+Author: Varun Parameswaran <vparam15@gmail.com>
+Date:   Thu Oct 16 21:25:23 2014 -0500
+
+    First files with code that we  added are Voting.py and RunVoting.in
+
+commit 9cf445a00fff7ca236cbe7dbe8392c594e2e1838
+Author: Herbert Gutierrez Rivas <hog74@cs.utexas.edu>
+Date:   Thu Oct 16 21:18:31 2014 -0500
+
+    Adding files into git
+
+commit f8b056c65ae7bc106d358d650c02625fe77ddb15
+Author: vparam15 <vparam15@gmail.com>
+Date:   Thu Oct 16 20:42:36 2014 -0500
+
+    Create README.md
