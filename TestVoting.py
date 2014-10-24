@@ -73,79 +73,160 @@ class TestVoting (TestCase):
 		b = Ballot([1, 2, 3])
 		self.assertEqual(b.choices, [1, 2, 3])
 		self.assertEqual(b.marker, 0)
+		self.assertEqual(b.choices[b.marker], 1)
 
-	# def test_solve_1 (self): 
-	# 	r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n2 1\n1 2\n1 2")
-	# 	w = StringIO()
-	# 	voting_solve(r, w)
-	# 	self.assertEqual (w, "Red")
+	def testB_init2 (self):
+		b = Ballot([1, 2, 3])
+		b.marker += 1
+		self.assertEqual(b.choices, [1, 2, 3])
+		self.assertEqual(b.marker, 1)
+		self.assertEqual(b.choices[b.marker], 2)
 
-	# def test_solve_2 (self): 
-	# 	r = StringIO ("1\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n")
+	def testB_init3 (self):
+		b = Ballot([1, 2, 3])
+		b.marker += 2
+		self.assertEqual(b.choices, [1, 2, 3])
+		self.assertEqual(b.marker, 2)
+		self.assertEqual(b.choices[b.marker], 3)
+
+	def testB_getchoice1 (self):
+		b = Ballot([1, 2, 3])
+		self.assertEqual(b.getchoice(), 1)
+
+	def testB_getchoice2 (self):
+		b = Ballot([1, 2, 3])
+		b.marker += 1
+		self.assertEqual(b.getchoice(), 2)
+
+	def testB_getchoice3 (self):
+		b = Ballot([1, 2, 3])
+		b.marker += 2
+		self.assertEqual(b.getchoice(), 3)
+
+	def testB_getinfo1 (self):
+		b = Ballot([1])
+		self.assertEqual(b.getinfo(), ([1], 0))
+
+	def testB_getinfo2 (self):
+		b = Ballot([1, 10, 100, 1000])
+		b.marker += 2
+		self.assertEqual(b.getinfo(), ([1, 10, 100, 1000], 2))
+
+	def testB_getinfo3 (self):
+		b = Ballot([1, 2, 3])
+		self.assertEqual(b.getinfo(), ([1, 2, 3], 0))
+
+	# ----
+	# voting_solve
+	# ----
+
+	def test_solve_1 (self): 
+		r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n2 1\n1 2\n1 2")
+		w = StringIO()
+		voting_solve(r, w)
+		self.assertEqual (w.getvalue(), "Red\n\n")
+
+	def test_solve_2 (self): 
+		r = StringIO ("1\n \n3\nRed\nGreen\nBlue\n3 2 1\n3 1 2\n2 3 1\n3 1 2\n")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Blue\n\n")
+
+	def test_solve_3 (self): 
+		r = StringIO ("1\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n1 3 2")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Red\n\n")
+
+	def test_solve_4 (self): 
+		r = StringIO ("2\n \n3\nRed\nGreen\nBlue\n1 2 3 \n2 1 3 \n2 3 1 \n3 1 2 \n1 3 2 \n\n2\nJohn\nJake\n1 2\n2 1\n1 2")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Red\n\nJohn\n\n")
+
+	def test_solve_5 (self): 
+		r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n2 1\n1 2\n2 1")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Red\nGreen\n\n")
+
+	def test_solve_6 (self): 
+		r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n2 1\n1 2\n1 2")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Red\n\n")
+
+	def test_solve_7 (self): 
+		r = StringIO ("1\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n2 1 3")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Green\n\n")
+
+	def test_solve_8 (self): 
+		r = StringIO ("1\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n1 3 2")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Red\n\n")
+
+	def test_solve_9 (self): 
+		r = StringIO ("2\n \n3\nRed\nGreen\nBlue\n1 2 3 \n3 1 2 \n2 3 1 \n3 1 2 \n1 3 2 \n\n2\nJohn\nJake\n1 2\n2 1\n1 2")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Blue\n\nJohn\n\n")
+
+	def test_solve_10 (self): 
+		r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n2 1\n1 2\n2 1")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Red\nGreen\n\n")
+
+	def test_solve_11 (self): 
+		r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n1 2\n2 1")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Red\n\n")
+
+	def test_solve_12 (self): 
+		r = StringIO ("1\n \n2\nRed\nGreen\n2 1\n1 2\n2 1")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Green\n\n")
+
+	def test_solve_13 (self): 
+		r = StringIO ("1\n \n2\nObama\nRomney\n2 1\n1 2\n2 1")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Romney\n\n")
+
+	def test_solve_14 (self): 
+		r = StringIO ("2\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n1 3 2\n\n2\nJohn\nJake\n2 1\n2 1\n2 1")
+		w = StringIO()
+		voting_solve(r,w)
+		self.assertEqual (w.getvalue(), "Red\n\nJake\n\n")
+
+	# def test_solve_15 (self): 
+	# 	r = StringIO ("2\n \n3\nRed\nGreen\nMaroon\n3 2 1\n2 1 3\n2 3 1\n3 1 2\n1 3 2\n\n2\nJohn\nJake\n1 2\n2 1\n1 2")
 	# 	w = StringIO()
 	# 	voting_solve(r,w)
-	# 	self.assertEqual (w.getvalue(), "Green")
+	# 	self.assertEqual (w.getvalue(), "Maroon\n\nJohn\n\n")
 
-	# def test_solve_3 (self): 
-	# 	r = StringIO ("1\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n1 3 2")
+	# def test_solve_16 (self): 
+	# 	r = StringIO ("2\n \n3\nRed\nGreen\nMaroon\n3 2 1\n2 1 3\n2 3 1\n3 1 2\n1 3 2\n\
+	# 		 \n2\nJohn\nJake\n1 2\n2 1")
 	# 	w = StringIO()
 	# 	voting_solve(r,w)
-	# 	self.assertEqual (w.getvalue(), "Red")
+	# 	self.assertEqual (w.getvalue(), "Maroon\n \nJohn\nJake\n\n")
 
-	# def test_solve_4 (self): 
-	# 	r = StringIO ("2\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n1 3 2\n\
-	# 		 \n2\nJohn\nJake\n1 2\n2 1\n1 2")
-	# 	w = StringIO()
-	# 	voting_solve(r,w)
-	# 	self.assertEqual (w.getvalue(), "Red\n \nJohn")
+	def test_solve_17 (self):
+		r = StringIO ("1\n\n3\nWashington\nAdams\nJefferson\n1 2 3\n2 3 1\n3 1 2")
+		w = StringIO()
+		voting_solve(r, w)
+		self.assertEqual (w.getvalue(), "Washington\nAdams\nJefferson\n\n")
 
-	# def test_solve_5 (self): 
-	# 	r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n2 1\n1 2\n2 1")
-	# 	w = StringIO()
-	# 	voting_solve(r,w)
-	# 	self.assertEqual (w.getvalue(), "Red\nGreen")
-
-	# def test_solve_6 (self): 
-	# 	r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n2 1\n1 2\n1 2")
-	# 	w = StringIO()
-	# 	voting_solve(r,w)
-	# 	self.assertEqual (w.getvalue(), "Red")
-
-	# def test_solve_7 (self): 
-	# 	r = StringIO ("1\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n")
-	# 	w = StringIO()
-	# 	voting_solve(r,w)
-	# 	self.assertEqual (w.getvalue(), "Green")
-
-	# def test_solve_8 (self): 
-	# 	r = StringIO ("1\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n1 3 2")
-	# 	w = StringIO()
-	# 	voting_solve(r,w)
-	# 	self.assertEqual (w.getvalue(), "Red")
-
-	# def test_solve_9 (self): 
-	# 	r = StringIO ("2\n \n3\nRed\nGreen\nBlue\n1 2 3\n2 1 3\n2 3 1\n3 1 2\n1 3 2\n\
-	# 		 \n2\nJohn\nJake\n1 2\n2 1\n1 2")
-	# 	w = StringIO()
-	# 	voting_solve(r,w)
-	# 	self.assertEqual (w.getvalue(), "Red\n \nJohn")
-
-	# def test_solve_10 (self): 
-	# 	r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n2 1\n1 2\n2 1")
-	# 	w = StringIO()
-	# 	voting_solve(r,w)
-	# 	self.assertEqual (w.getvalue(), "Red\nGreen")
-
-	# def test_solve_11 (self): 
-	# 	r = StringIO ("1\n \n2\nRed\nGreen\n1 2\n1 2\n2 1")
-	# 	w = StringIO()
-	# 	voting_solve(r,w)
-	# 	self.assertEqual (w.getvalue(), "Red")
-
-	# def test_solve_12 (self): 
-	# 	r = StringIO ("1\n \n2\nRed\nGreen\n2 1\n1 2\n2 1")
-	# 	w = StringIO()
-	# 	voting_solve(r,w)
-	# 	self.assertEqual (w.getvalue(), "Green")
+	def test_solve_18 (self):
+		r = StringIO ("1\n \n3\nWashington\nAdams\nJefferson\n1 2 3\n1 2 3\n3 1 2\n3 2 1")
+		w = StringIO()
+		voting_solve(r, w)
+		self.assertEqual (w.getvalue(), "Washington\nJefferson\n\n")
 
 main()
