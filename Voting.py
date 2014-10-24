@@ -59,9 +59,11 @@ def find_tie (clist, numBallots):
 			pass
 		else:
 			all_tied = False
+	tie_print = ''
 	if all_tied == True:
 		for c in clist:
-			print (c.name)
+			tie_print += c.name
+		print(tie_print)
 		return True
 	return False
 
@@ -126,9 +128,7 @@ def reassign (loser, clist):
 # 								c.increment(b)
 # 								transferred = True
 
-def voting_read ():
-	r = open('/v/filer4b/v35q001/vparam/cs313e/projects/cs313e-voting/cs313e-voting/RunVoting.in', 'r')
-
+def voting_solve (r, w):
 	while (True):
 		line = r.readline()
 		if not line:
@@ -168,5 +168,3 @@ def voting_read ():
 			# 	elif find_winner (clist, majority) == True:
 			# 		break
 			# 	voting_solve (clist)
-
-voting_read()

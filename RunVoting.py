@@ -1,11 +1,9 @@
-# -------
-# imports
-# -------
 import sys
-import json
 
-from Voting import voting_read, voting_solve, find_winner, find_tie
+from Voting import voting_solve
+
 # ----
 # main
 # ----
-voting_read(sys.stdin, sys.stdout)
+
+voting_solve(sys.stdin, sys.stdout)
