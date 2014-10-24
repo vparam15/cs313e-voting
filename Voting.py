@@ -27,7 +27,8 @@ class Ballot:
 	def getinfo (self):
 		return (self.choices, self.marker)
 
-def find_winner (clist, numBallots):
+def find_winner (clist, numBallots, w):
+	outfile = (w)
 	tie = numBallots // 2
 	max_count = 1
 	max_clist = []
@@ -39,11 +40,13 @@ def find_winner (clist, numBallots):
 			max_clist.append(c)
 	if max_count > tie:
 		for max_c in max_clist:
-			print(max_c.name)
+			outfile.write(max_c.name)
+			outfile.write("\n")
 		return True
 	return False
 
-def find_tie (clist, numBallots):
+def find_tie (clist, numBallots, w):
+	outfile = (w)
 	tie = numBallots / len(clist)
 	all_tied = True
 	for c in clist:
@@ -55,7 +58,8 @@ def find_tie (clist, numBallots):
 	if all_tied == True:
 		for c in clist:
 			tie_print += c.name
-		print(tie_print)
+		outfile.write(tie_print)
+		outfile.write("\n")
 		return True
 	return False
 
@@ -121,10 +125,10 @@ def voting_solve (r, w):
 						c.increment(ballot)
 
 			while True:
-				found_winner = find_winner (clist, numBallots)
+				found_winner = find_winner (clist, numBallots, w)
 				if found_winner:
 					break
-				found_tie = find_tie (clist, numBallots)
+				found_tie = find_tie (clist, numBallots, w)
 				if found_tie:
 					break
 				loser_list = find_losers(clist, numBallots)
