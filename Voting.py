@@ -9,10 +9,7 @@ class Candidate:
 		self.running = True
 
 	def getinfo (self):
-		ballots = []
-		for b in self.ballots:
-			ballots.append(b.getinfo())
-		return (self.name, self.num, self.count, ballots, self.running)
+		return (self.name, self.num, self.count, self.ballots, self.running)
 
 	def increment (self, b):
 		self.count += 1
@@ -45,11 +42,6 @@ def find_winner (clist, numBallots):
 			print(max_c.name)
 		return True
 	return False
-	# for c in clist:
-	# 	if c.count > tie:
-	# 		print(c.name)
-	# 		return True
-	# return False
 
 def find_tie (clist, numBallots):
 	tie = numBallots / len(clist)
@@ -92,41 +84,17 @@ def empty_losers (clist, loser_list):
 def reassign (loser, clist):
 	found = False
 	new_c = None
-	# print(loser.getinfo())
 	for ballot in loser.ballots:
-		# print(ballot)
-		# print ("losing marker = " + str(ballot.marker))
 		while not found:
 			ballot.marker += 1
 			if ballot.marker >= len(ballot.choices):
 				break
-			# print ("marker = " + str(ballot.marker))
 			for c in clist:
-				# print ("choice = " + str(ballot.choices[ballot.marker]) + " " + str(c.num))
 				if (int(ballot.choices[ballot.marker]) == int(c.num)) and c.running:
 					found = True
 					new_c = c
 					break
 		new_c.increment(ballot)
-
-# def voting_solve (clist):
-# 	max_count = 0
-# 	for c in clist:
-# 		if c.count >= max_count:
-# 			max_count = c.count
-# 		else:
-# 			c.running = False
-# 	for c in clist:
-# 		if c.running is False:
-# 			for b in c.ballots:
-# 				transferred = False
-# 				while not transferred:
-# 					next_choice = b.getchoice()
-# 					for c in clist:
-# 						if c.running is True:
-# 							if next_choice == c.num:
-# 								c.increment(b)
-# 								transferred = True
 
 def voting_solve (r, w):
 	while (True):
@@ -161,10 +129,3 @@ def voting_solve (r, w):
 					break
 				loser_list = find_losers(clist, numBallots)
 				empty_losers (clist, loser_list)
-			# empty_losers(clist, loser_list)
-			# while True:
-			# 	if find_tie (clist, tie_num) == True:
-			# 		break
-			# 	elif find_winner (clist, majority) == True:
-			# 		break
-			# 	voting_solve (clist)
