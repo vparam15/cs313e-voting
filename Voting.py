@@ -8,13 +8,13 @@ class Candidate:
 		self.ballots = []
 		self.running = True
 
-	def getname (self):
-		return self.name
+	def getinfo (self):
+		ballots = []
+		for b in self.ballots:
+			ballots.append(b.getinfo())
+		return (self.name, self.num, self.count, ballots, self.running)
 
-	def getcount (self):
-		return self.count
-
-	def increment (self, b): 
+	def increment (self, b):
 		self.count += 1
 		self.ballots.append (b)
 
@@ -25,49 +25,108 @@ class Ballot:
 
 	def getchoice (self):
 		x = int(self.choices[self.marker])
-		self.marker += 1
 		return x
 
-def find_winner (clist, majority):
-	for c in clist:
-		if c.count > majority:
-			print(c.name)
-	global done
-	done = True
+	def getinfo (self):
+		return (self.choices, self.marker)
 
-def find_tie (clist, tie_num):
+def find_winner (clist, numBallots):
+	tie = numBallots // 2
+	max_count = 1
+	max_clist = []
+	for c in clist:
+		if c.count >= max_count:
+			max_count = c.count
+	for c in clist:
+		if c.count == max_count:
+			max_clist.append(c)
+	if max_count > tie:
+		for max_c in max_clist:
+			print(max_c.name)
+		return True
+	return False
+	# for c in clist:
+	# 	if c.count > tie:
+	# 		print(c.name)
+	# 		return True
+	# return False
+
+def find_tie (clist, numBallots):
+	tie = numBallots / len(clist)
 	all_tied = True
 	for c in clist:
-		if c.count == tie_num:
+		if c.count == tie:
 			pass
 		else:
 			all_tied = False
 	if all_tied == True:
 		for c in clist:
 			print (c.name)
-	global done
-	done = True
+		return True
+	return False
 
-def voting_solve (clist):
-	max_count = 0
+def find_losers (clist, numBallots):
+	max_count = 1
+	loser_list = []
 	for c in clist:
 		if c.count >= max_count:
 			max_count = c.count
 		else:
-			c.running = False
-	for c in clist:
-		if c.running is False:
-			for b in c.ballots:
-				transferred = False
-				while not transferred:
-					next_choice = b.getchoice()
-					for c in clist:
-						if c.running is True:
-							if next_choice == c.num:
-								c.increment(b)
-								transferred = True
+			loser_list.append (c)
+	return loser_list
 
-def voting_read (r, w):
+def empty_losers (clist, loser_list):
+	removelist = []
+	for c in clist:
+		if c in loser_list:
+			loser = c
+			c.running = False
+			removelist.append (loser)
+
+	for c in removelist:
+		reassign (c, clist)
+		clist.remove(c)
+
+def reassign (loser, clist):
+	found = False
+	new_c = None
+	# print(loser.getinfo())
+	for ballot in loser.ballots:
+		# print(ballot)
+		# print ("losing marker = " + str(ballot.marker))
+		while not found:
+			ballot.marker += 1
+			if ballot.marker >= len(ballot.choices):
+				break
+			# print ("marker = " + str(ballot.marker))
+			for c in clist:
+				# print ("choice = " + str(ballot.choices[ballot.marker]) + " " + str(c.num))
+				if (int(ballot.choices[ballot.marker]) == int(c.num)) and c.running:
+					found = True
+					new_c = c
+					break
+		new_c.increment(ballot)
+
+# def voting_solve (clist):
+# 	max_count = 0
+# 	for c in clist:
+# 		if c.count >= max_count:
+# 			max_count = c.count
+# 		else:
+# 			c.running = False
+# 	for c in clist:
+# 		if c.running is False:
+# 			for b in c.ballots:
+# 				transferred = False
+# 				while not transferred:
+# 					next_choice = b.getchoice()
+# 					for c in clist:
+# 						if c.running is True:
+# 							if next_choice == c.num:
+# 								c.increment(b)
+# 								transferred = True
+
+def voting_read ():
 	r = open('/v/filer4b/v35q001/vparam/cs313e/projects/cs313e-voting/cs313e-voting/RunVoting.in', 'r')
 
 	while (True):
@@ -92,16 +151,22 @@ def voting_read (r, w):
 				for c in clist:
 					if (choice1 == c.num):
 						c.increment(ballot)
-			majority = math.ceil(numBallots / 2)
-			tie_num = numBallots/totcandidates
-			done = False
-			while not done:
-				find_winner (clist, majority)
-				if done == True:
+
+			while True:
+				found_winner = find_winner (clist, numBallots)
+				if found_winner:
 					break
-				find_tie (clist, tie_num)
-				if done == True:
+				found_tie = find_tie (clist, numBallots)
+				if found_tie:
 					break
-				voting_solve (clist)
+				loser_list = find_losers(clist, numBallots)
+				empty_losers (clist, loser_list)
+			# empty_losers(clist, loser_list)
+			# while True:
+			# 	if find_tie (clist, tie_num) == True:
+			# 		break
+			# 	elif find_winner (clist, majority) == True:
+			# 		break
+			# 	voting_solve (clist)
 
 voting_read()
